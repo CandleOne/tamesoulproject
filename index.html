@@ -1,1 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tame Souls Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --green: #758831;
+      --green-dark: #4e5c20;
+      --green-light: #9aaf4a;
+      --cream: #FDFBD4;
+      --tan: #BDB486;
+      --tan-dark: #8e8154;
+      --white: #ffffff;
+      --black: #1a1a0e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(253,251,212,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(189,180,134,0.3);
+    }
+
+    .nav-logo {
+      height: 36px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--green-dark);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 55%, rgba(117,136,49,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      margin-bottom: 1.8rem;
+      font-weight: 500;
+    }
+
+    .hero-logo {
+      width: min(460px, 82vw);
+      height: auto;
+      margin-bottom: 2rem;
+      filter: drop-shadow(0 4px 24px rgba(117,136,49,0.18));
+    }
+
+    .hero-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.15rem, 2.5vw, 1.6rem);
+      color: var(--green-dark);
+      max-width: 620px;
+      line-height: 1.55;
+      margin-bottom: 3rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.4rem;
+      border-radius: 2px;
+      transition: all 0.22s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--cream);
+      border: 2px solid var(--green);
+    }
+    .btn-primary:hover { background: var(--green-dark); border-color: var(--green-dark); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--green);
+      border: 2px solid var(--green);
+    }
+    .btn-outline:hover { background: var(--green); color: var(--cream); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--tan-dark);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 42px;
+      background: linear-gradient(to bottom, var(--tan-dark), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* SECTION: MISSION STRIP */
+    .mission-strip {
+      background: var(--green);
+      color: var(--cream);
+      padding: 3.5rem 3rem;
+      text-align: center;
+    }
+
+    .mission-strip p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+      font-style: italic;
+      line-height: 1.65;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    /* SECTION: THREE PILLARS */
+    .pillars {
+      padding: 7rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1.2;
+      margin-bottom: 3.5rem;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+    }
+
+    .pillar-card {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      border-top: 3px solid var(--tan);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .pillar-card:hover {
+      border-color: var(--green);
+      transform: translateY(-4px);
+    }
+
+    .pillar-num {
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--tan);
+      line-height: 1;
+      margin-bottom: 1rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .pillar-title {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--green-dark);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.88rem;
+    }
+
+    .pillar-desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #4a4a32;
+    }
+
+    /* SECTION: FULL-WIDTH QUOTE */
+    .quote-section {
+      background: var(--black);
+      padding: 7rem 3rem;
+      text-align: center;
+    }
+
+    .big-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 4vw, 2.8rem);
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.45;
+      max-width: 860px;
+      margin: 0 auto 2rem;
+    }
+
+    .big-quote em {
+      color: var(--green-light);
+      font-style: normal;
+    }
+
+    .quote-attr {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tan);
+    }
+
+    /* SECTION: VISION */
+    .vision-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 60vh;
+    }
+
+    .vision-text {
+      background: var(--cream);
+      padding: 6rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .vision-text .section-heading { margin-bottom: 1.5rem; }
+
+    .vision-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #4a4a32;
+      margin-bottom: 1.5rem;
+    }
+
+    .vision-image {
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vision-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.08;
+      background-image: repeating-linear-gradient(
+        45deg,
+        var(--cream) 0px,
+        var(--cream) 1px,
+        transparent 1px,
+        transparent 12px
+      );
+    }
+
+    .vision-stat {
+      position: relative;
+      text-align: center;
+      color: var(--cream);
+    }
+
+    .stat-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.82;
+      max-width: 200px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      background: var(--tan);
+      padding: 6rem 3rem;
+      text-align: center;
+    }
+
+    .cta-section .section-heading {
+      color: var(--black);
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      font-size: 1.05rem;
+      color: var(--green-dark);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      color: var(--tan);
+      padding: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    footer img { height: 28px; opacity: 0.75; filter: brightness(0.8) sepia(1) hue-rotate(30deg) saturate(0.6); }
+
+    footer p { font-size: 0.78rem; letter-spacing: 0.06em; opacity: 0.6; }
+
+    footer nav { display: flex; gap: 2rem; }
+    footer nav a {
+      font-size: 0.78rem;
+      color: var(--tan);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+      letter-spacing: 0.08em;
+    }
+    footer nav a:hover { opacity: 1; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .pillars { padding: 5rem 1.5rem; }
+      .vision-section { grid-template-columns: 1fr; }
+      .vision-text { padding: 4rem 1.5rem; }
+      .cta-section { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <img src="assets/images/Tamelogonobg.png" alt="Tame" class="nav-logo" />
+    <ul class="nav-links">
+      <li><a href="tame-souls-landing.html">Home</a></li>
+      <li><a href="tame-souls-about.html">About</a></li>
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-eyebrow">A movement for our people</span>
+    <img src="Tamelogonobg.png" alt="Tame Souls Project" class="hero-logo" />
+    <p class="hero-sub">Redirecting ancestral energy toward healing, growth, and a more equitable world.</p>
+    <div class="hero-cta">
+      <a href="tame-souls-about.html" class="btn btn-primary">Learn Our Story</a>
+      <a href="#mission" class="btn btn-outline">Our Mission</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MISSION STRIP -->
+  <section class="mission-strip" id="mission">
+    <p>
+      "To move the Black community toward a more sustainable, forward-looking, and stable way of life — and to push the broader world toward acceptance and a more inclusive society."
+    </p>
+  </section>
+
+  <!-- THREE PILLARS -->
+  <section class="pillars">
+    <span class="section-eyebrow">What we stand for</span>
+    <h2 class="section-heading">Three Pillars of Change</h2>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Educational Equity</div>
+        <p class="pillar-desc">Closing the gap between our communities and the broader world by centering knowledge, critical thinking, and the full history of Black people on this earth.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Economic Sovereignty</div>
+        <p class="pillar-desc">Building sustainable pathways to ownership, wealth-building, and financial independence within Black communities, rooted in collective uplift.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Emotional Grounding</div>
+        <p class="pillar-desc">Channeling the fiery ancestral energy of the Black soul — not suppressing it — toward healing, community care, and purposeful living.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-section">
+    <p class="big-quote">
+      To tame the soul is not to <em>kill that fire</em> our souls possess, but to redirect and channel that energy in a way that is <em>beneficial to oneself</em> and one's community.
+    </p>
+    <span class="quote-attr">— The Tame Souls Project</span>
+  </section>
+
+  <!-- VISION -->
+  <section class="vision-section">
+    <div class="vision-text">
+      <span class="section-eyebrow">Why this work matters</span>
+      <h2 class="section-heading">Reclaiming the Narrative</h2>
+      <p>
+        For generations, the power, beauty, and brilliance of Black identity has been weaponized against us — our confidence painted as aggression, our culture extracted without credit, our youth aged prematurely by a world that refuses to grant them innocence.
+      </p>
+      <p>
+        The Tame Souls Project exists to name these forces clearly, and to build something stronger in their place.
+      </p>
+      <a href="tame-souls-about.html" class="btn btn-outline" style="align-self: flex-start; margin-top: 1rem;">Read the Full Story</a>
+    </div>
+    <div class="vision-image">
+      <div class="vision-pattern"></div>
+      <div class="vision-stat">
+        <div class="stat-big">One</div>
+        <div class="stat-label">Community. Many Souls. Infinite Potential.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="connect">
+    <h2 class="section-heading">Be Part of the Movement</h2>
+    <p>The Tame Souls Project is a community effort. Whether you carry these ideas forward in your home, your school, or your city — your participation matters.</p>
+    <a href="tame-souls-about.html" class="btn btn-primary">Explore the Project</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="Tamelogonobg.png" alt="Tame Souls Project" />
+    <p>© 2025 The Tame Souls Project. All rights reserved.</p>
+    <nav>
+      <a href="tame-souls-landing.html">Home</a>
+      <a href="tame-souls-about.html">About</a>
+    </nav>
+  </footer>
+
+</body>
+</html>

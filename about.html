@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Tame Souls Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #758831;
+      --green-dark: #4e5c20;
+      --green-light: #9aaf4a;
+      --cream: #FDFBD4;
+      --tan: #BDB486;
+      --tan-dark: #8e8154;
+      --white: #ffffff;
+      --black: #1a1a0e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav.topnav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(253,251,212,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(189,180,134,0.3);
+    }
+
+    .nav-logo { height: 36px; width: auto; }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--green-dark);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--green); }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 10rem 3rem 5rem;
+      max-width: 800px;
+    }
+
+    .page-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      font-weight: 500;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-intro {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #4a4a32;
+      max-width: 620px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, var(--tan), transparent);
+      margin: 0 3rem;
+    }
+
+    /* ACCORDION SECTION */
+    .accordion-section {
+      padding: 5rem 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .accordion-intro {
+      margin-bottom: 2.5rem;
+    }
+
+    .accordion-intro .section-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tan-dark);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .accordion-intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+
+    /* ACCORDION ITEMS */
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .accordion-item {
+      background: var(--white);
+      border-left: 3px solid transparent;
+      transition: border-color 0.25s;
+    }
+
+    .accordion-item.open {
+      border-left-color: var(--green);
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      cursor: pointer;
+      user-select: none;
+      gap: 1rem;
+    }
+
+    .accordion-header:hover .accordion-label {
+      color: var(--green);
+    }
+
+    .accordion-label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--green-dark);
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+      line-height: 1.35;
+    }
+
+    .accordion-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid var(--tan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.25s;
+      color: var(--tan-dark);
+    }
+
+    .accordion-item.open .accordion-icon {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--cream);
+      transform: rotate(45deg);
+    }
+
+    .accordion-icon svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+    }
+
+    .accordion-item.open .accordion-body {
+      max-height: 2000px;
+    }
+
+    .accordion-body-inner {
+      padding: 0 2rem 1.75rem;
+      border-top: 1px solid rgba(189,180,134,0.25);
+      padding-top: 1.5rem;
+    }
+
+    .accordion-body-inner p {
+      font-size: 0.98rem;
+      line-height: 1.82;
+      color: #4a4a32;
+      margin-bottom: 1.1rem;
+    }
+
+    .accordion-body-inner p:last-child { margin-bottom: 0; }
+
+    /* Sub-items list within accordion */
+    .sub-items {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .sub-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(189,180,134,0.2);
+      align-items: flex-start;
+    }
+
+    .sub-item:last-child { border-bottom: none; }
+
+    .sub-item-marker {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    .sub-item-text {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #4a4a32;
+    }
+
+    /* BOTTOM CTA STRIP */
+    .bottom-strip {
+      background: var(--green);
+      padding: 4rem 3rem;
+      text-align: center;
+    }
+
+    .bottom-strip p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--cream);
+      line-height: 1.6;
+      max-width: 680px;
+      margin: 0 auto 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.4rem;
+      border-radius: 2px;
+      transition: all 0.22s;
+      cursor: pointer;
+    }
+
+    .btn-light {
+      background: var(--cream);
+      color: var(--green-dark);
+      border: 2px solid var(--cream);
+    }
+
+    .btn-light:hover {
+      background: transparent;
+      color: var(--cream);
+      border-color: var(--cream);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      color: var(--tan);
+      padding: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    footer img {
+      height: 28px;
+      opacity: 0.75;
+      filter: brightness(0.8) sepia(1) hue-rotate(30deg) saturate(0.6);
+    }
+
+    footer p { font-size: 0.78rem; letter-spacing: 0.06em; opacity: 0.6; }
+
+    footer nav { display: flex; gap: 2rem; }
+    footer nav a {
+      font-size: 0.78rem;
+      color: var(--tan);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+      letter-spacing: 0.08em;
+    }
+    footer nav a:hover { opacity: 1; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav.topnav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .page-hero { padding: 8rem 1.5rem 4rem; }
+      .divider { margin: 0 1.5rem; }
+      .accordion-section { padding: 4rem 1.5rem; }
+      .accordion-header { padding: 1.25rem 1.25rem; }
+      .accordion-body-inner { padding: 0 1.25rem 1.5rem; padding-top: 1.25rem; }
+      .bottom-strip { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topnav">
+    <img src="assets/images/Tamelogonobg.png" alt="Tame" class="nav-logo" />
+    <ul class="nav-links">
+      <li><a href="tame-souls-landing.html">Home</a></li>
+      <li><a href="tame-souls-about.html" class="active">About</a></li>
+      <li><a href="tame-souls-landing.html#mission">Mission</a></li>
+      <li><a href="tame-souls-landing.html#connect">Connect</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <span class="page-eyebrow">The Tame Souls Project</span>
+    <h1 class="page-title">Who We Are &amp; What We Believe</h1>
+    <p class="page-intro">
+      The Tame Souls Project is rooted in the truth that the African soul is powerful, fiery, and ancestral — and that this energy, long distorted and suppressed, can be redirected toward healing, liberation, and lasting community strength.
+    </p>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ACCORDION SECTION -->
+  <section class="accordion-section">
+    <div class="accordion-intro">
+      <span class="section-eyebrow">Learn more</span>
+      <h2>Explore the Project</h2>
+    </div>
+
+    <div class="accordion" role="list">
+
+      <!-- 1. Preamble -->
+      <div class="accordion-item" role="listitem">
+        <div class="accordion-header" aria-expanded="false" role="button" tabindex="0">
+          <span class="accordion-label">Preamble</span>
+          <div class="accordion-icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          </div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>
+              The African and African American populations of the world have long been mistreated, oppressed, and demonized. This alienation and general hatred of our people have led to an — in some cases intentional — divide between our population and the broader global community.
+            </p>
+            <p>
+              This separation has materialized in a discrepancy in regards to the educational, economic, and emotional values within our communities. The primary objectives of the Tame Souls Project aim to move the Black community towards a more sustainable, forward-looking, and stable way of life, and to push the broader world forward in regards to acceptance and the development of a more inclusive society.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. What does it mean to tame the soul? -->
+      <div class="accordion-item" role="listitem">
+        <div class="accordion-header" aria-expanded="false" role="button" tabindex="0">
+          <span class="accordion-label">What does it mean to tame the soul?</span>
+          <div class="accordion-icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          </div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>
+              The African soul is an inherently fiery, energetic entity. This energy is ancestral and is derivative of the spirit that our predecessors required to survive the harsh conditions of our mother continent, and has been strengthened by the conditions that our people have been subjected to throughout modern history.
+            </p>
+            <p>
+              The souls of the Black population have been vilified, suppressed, and distorted, to the benefit of those who stand to gain from the oppression of the Black population. To tame the soul is not to kill that fire our souls possess, but rather to redirect and channel that energy in a way that is beneficial to oneself and one's community.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. How the Black soul is used against itself -->
+      <div class="accordion-item" role="listitem">
+        <div class="accordion-header" aria-expanded="false" role="button" tabindex="0">
+          <span class="accordion-label">How the Black soul is used against itself</span>
+          <div class="accordion-icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+          </div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>
+              Systemic forces have long turned the strengths of the Black soul into weapons against us. Understanding these mechanisms is the first step toward reclaiming our narrative.
+            </p>
+            <div class="sub-items">
+              <div class="sub-item">
+                <div class="sub-item-marker"></div>
+                <span class="sub-item-text"><strong>Black confidence</strong> painted as boisterousness — our self-assurance is reframed as arrogance or aggression to undermine our authority and presence.</span>
+              </div>
+              <div class="sub-item">
+                <div class="sub-item-marker"></div>
+                <span class="sub-item-text"><strong>Reactiveness to mistreatment</strong> portrayed as unbridled anger or aggression — our justified responses to injustice are pathologized rather than understood.</span>
+              </div>
+              <div class="sub-item">
+                <div class="sub-item-marker"></div>
+                <span class="sub-item-text"><strong>Glorification of criminality and violence</strong> — through private prison profiteering and media manipulation, harmful narratives are incentivized while education, morality, and emotional regulation are minimized.</span>
+              </div>
+              <div class="sub-item">
+                <div class="sub-item-marker"></div>
+                <span class="sub-item-text"><strong>Physical traits and characteristics</strong> — athleticism, skin tone, and hair — are portrayed as animalistic, undesirable, or threatening, rather than celebrated as expressions of beauty and ancestral heritage.</span>
+              </div>
+              <div class="sub-item">
+                <div class="sub-item-marker"></div>
+                <span class="sub-item-text"><strong>Cultural traditions</strong> depicted as uncivilized while being co-opted as popular culture for the economic gain of those who have suppressed their originators.</span>
+              </div>
+              <div class="sub-item">
+                <div class="sub-item-marker"></div>
+                <span class="sub-item-text"><strong>Over-sexualization and masculinization</strong> of our youth — adulthood is forced upon Black children, stripping them of innocence and burdening them with expectations no child should carry.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="bottom-strip">
+    <p>
+      "The energy our ancestors needed to survive — that same fire — is ours to redirect. Not extinguish. Not suppress. Redirect."
+    </p>
+    <a href="tame-souls-landing.html" class="btn btn-light">Back to Home</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="Tamelogonobg.png" alt="Tame Souls Project" />
+    <p>© 2025 The Tame Souls Project. All rights reserved.</p>
+    <nav>
+      <a href="tame-souls-landing.html">Home</a>
+      <a href="tame-souls-about.html">About</a>
+    </nav>
+  </footer>
+
+  <script>
+    const items = document.querySelectorAll('.accordion-item');
+
+    items.forEach(item => {
+      const header = item.querySelector('.accordion-header');
+      header.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        items.forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          header.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      header.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          header.click();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
